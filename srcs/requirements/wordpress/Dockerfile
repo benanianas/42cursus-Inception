@@ -17,5 +17,6 @@ RUN sed -i 's/database_name_here/wpdb/g' /var/www/html/wordpress/wp-config.php
 RUN sed -i 's/username_here/wpuser/g' /var/www/html/wordpress/wp-config.php
 RUN sed -i 's/password_here/dbpassword/g' /var/www/html/wordpress/wp-config.php
 RUN chown -R www-data:www-data /var/www/html/wordpress
+RUN mkdir /run/php/
 
-# CMD [ "php-fpm7.3", "-g", "daemon off;" ]
+CMD [ "php-fpm7.3", "--nodaemonize" ]
