@@ -1,0 +1,30 @@
+version: "3.6"
+services:
+  wordpress:
+    build: ./requirements/wordpress
+    volumes:
+      - WordPress:/var/www
+    restart: on-failure
+    ports:
+      - "9000:9000"
+    container_name: wordpress
+    depends_on:
+      - mariadb
+  mariadb:
+    build: ./requirements/mariadb
+    ports:
+      - "3306:3306"
+    restart: on-failure
+    container_name: mariadb
+  nginx:
+    build: ./requirements/nginx
+    volumes:
+      - WordPress:/var/www
+    links:
+        - wordpress
+    ports:
+      - "80:80"
+    restart: on-failure
+    container_name: nginx
+volumes:
+  WordPress:
