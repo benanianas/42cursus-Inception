@@ -4,6 +4,9 @@ services:
     build: ./requirements/mariadb
     ports:
       - "3306:3306"
+    networks:
+      inception:
+        ipv4_address: "10.12.69.1"
     restart: on-failure
     container_name: mariadb
   wordpress:
@@ -13,6 +16,9 @@ services:
     restart: on-failure
     ports:
       - "9000:9000"
+    networks:
+      inception:
+        ipv4_address: "10.12.69.2"
     container_name: wordpress
     depends_on:
       - mariadb
@@ -22,10 +28,19 @@ services:
       - WordPress:/var/www
     ports:
       - "80:80"
+      - "443:443"
+    networks:
+      inception:
+        ipv4_address: "10.12.69.3"
     depends_on:
       - wordpress
     restart: on-failure
     container_name: nginx
+networks:
+  inception:
+   ipam:
+     config:
+       - subnet: "10.12.69.0/8"
 volumes:
   WordPress:
     driver: local
