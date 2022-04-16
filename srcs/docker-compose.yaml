@@ -1,32 +1,35 @@
 version: "3.6"
 services:
-  wordpress:
-    build: ./requirements/wordpress
-    volumes:
-      - WordPress:/var/www
-    links:
-      - mariadb
-    restart: on-failure
-    ports:
-      - "9000:9000"
-    container_name: wordpress
-    depends_on:
-      - mariadb
   mariadb:
     build: ./requirements/mariadb
     ports:
       - "3306:3306"
     restart: on-failure
     container_name: mariadb
+  wordpress:
+    build: ./requirements/wordpress
+    volumes:
+      - WordPress:/var/www
+    restart: on-failure
+    ports:
+      - "9000:9000"
+    container_name: wordpress
+    depends_on:
+      - mariadb
   nginx:
     build: ./requirements/nginx
     volumes:
       - WordPress:/var/www
-    links:
-        - wordpress
     ports:
       - "80:80"
+    depends_on:
+      - wordpress
     restart: on-failure
     container_name: nginx
 volumes:
   WordPress:
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: bind
+      device: /Volumes/Mac/Projects/Cursus/42cursus-Inception/srcs/WordPress_volume
