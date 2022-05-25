@@ -4,6 +4,10 @@ services:
     build: ./requirements/mariadb
     ports:
       - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       inception:
         ipv4_address: "10.12.69.1"
@@ -47,4 +51,4 @@ volumes:
     driver_opts:
       type: 'none' 
       o: bind
-      device: /Volumes/Mac/Projects/Cursus/42cursus-Inception/srcs/WordPress_volume
+      device: /Users/abenani/Desktop/42cursus-Inception/WordPress_volume
