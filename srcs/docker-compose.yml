@@ -8,6 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${DB_NAME}
     networks:
       inception:
         ipv4_address: "10.12.69.1"
@@ -20,6 +21,10 @@ services:
     restart: on-failure
     ports:
       - "9000:9000"
+    environment:
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${DB_NAME}
     networks:
       inception:
         ipv4_address: "10.12.69.2"
@@ -51,4 +56,4 @@ volumes:
     driver_opts:
       type: 'none' 
       o: bind
-      device: /Users/abenani/Desktop/42cursus-Inception/WordPress_volume
+      device: /home/anas/inception

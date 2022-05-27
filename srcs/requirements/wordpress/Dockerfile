@@ -9,9 +9,11 @@ RUN wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz > /dev/nul
 RUN mkdir -p /var/www/html
 RUN tar -xzf /tmp/wordpress.tar.gz -C /var/www/html
 RUN cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /tmp/wp-cli.phar > /dev/null 2>&1
+RUN chmod +x /tmp/wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 COPY ./conf/php-conf.sh /
 RUN chmod +x /php-conf.sh
-RUN sh /php-conf.sh
 RUN chown -R www-data:www-data /var/www/html/wordpress
 RUN mkdir /run/php/
-CMD [ "php-fpm7.3", "--nodaemonize" ]
+ENTRYPOINT [ "/php-conf.sh" ]

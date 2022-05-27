@@ -11,7 +11,10 @@ sed -i 's/;date.timezone =/date.timezone = \"Africa\/Casablanca\"/g' /etc/php/7.
 sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 
 # Database settings
-sed -i 's/database_name_here/wpdb/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/username_here/birdperson/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/password_here/DD3cL5jMY=a$/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/localhost/mariadb/g' /var/www/html/wordpress/wp-config.php
+sed -i "s/database_name_here/$DB_NAME/g" /var/www/html/wordpress/wp-config.php
+sed -i "s/username_here/$DB_USER/g" /var/www/html/wordpress/wp-config.php
+sed -i "s/password_here/$DB_PASSWORD/g" /var/www/html/wordpress/wp-config.php
+sed -i "s/localhost/mariadb/g" /var/www/html/wordpress/wp-config.php
+e
+php-fpm7.3 --nodaemonize
+
