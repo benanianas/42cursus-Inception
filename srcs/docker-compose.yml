@@ -45,6 +45,13 @@ services:
       - wordpress
     restart: on-failure
     container_name: nginx
+  redis:
+    build: ./requirements/redis
+    ports:
+      - "6379:6379"
+    networks:
+      inception:
+        ipv4_address: "10.12.69.4"
 networks:
   inception:
    ipam:
