@@ -9,6 +9,8 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       DB_NAME: ${DB_NAME}
+    volumes:
+      - db:/var/lib/mysql
     networks:
       inception:
         ipv4_address: "10.12.69.1"
@@ -17,7 +19,7 @@ services:
   wordpress:
     build: ./requirements/wordpress
     volumes:
-      - WordPress:/var/www
+      - wp:/var/www
     restart: on-failure
     ports:
       - "9000:9000"
@@ -25,6 +27,8 @@ services:
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_NAME: ${DB_NAME}
+      ADMIN_PASS: ${ADMIN_PASS}
+      USER_PASS: ${USER_PASS}
     networks:
       inception:
         ipv4_address: "10.12.69.2"
@@ -34,7 +38,7 @@ services:
   nginx:
     build: ./requirements/nginx
     volumes:
-      - WordPress:/var/www
+      - wp:/var/www
     ports:
       - "80:80"
       - "443:443"
@@ -58,9 +62,15 @@ networks:
      config:
        - subnet: "10.12.69.0/8"
 volumes:
-  WordPress:
+  wp:
     driver: local
     driver_opts:
       type: 'none' 
       o: bind
-      device: /home/anas/inception
+      device: $HOME/abenani/data/wp
+  db:
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: bind
+      device: $HOME/abenani/data/db

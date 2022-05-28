@@ -19,7 +19,8 @@ define( 'WP_REDIS_TIMEOUT', 1 );
 define( 'WP_REDIS_READ_TIMEOUT', 1 );
 define( 'WP_REDIS_DATABASE', 0 );
 PHP
-wp core install --path=/var/www/wordpress --url=localhost --title="wooba looba dub dub" --admin_user=pickleRick --admin_password=wooba --admin_email=rick@1337.ma --allow-root
+wp core install --path=/var/www/wordpress --url=abenani.42.fr --title=abenani --admin_user=benanianas --admin_password=$ADMIN_PASS --admin_email=rick@1337.ma --allow-root
+wp user create anas benanianas21@gmail.com --user_pass=$USER_PASS --role=author --path=/var/www/wordpres --allow-root
 wp plugin install redis-cache --version=2.0.26 --activate --path=/var/www/wordpress --allow-root
 wp redis enable --path=/var/www/wordpress --allow-root
 php-fpm7.3 --nodaemonize
