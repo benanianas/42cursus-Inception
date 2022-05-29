@@ -1,11 +1,11 @@
 init:
-	mkdir -p $HOME/data/wp $HOME/data/db
+	mkdir -p ${HOME}/data/wp ${HOME}/data/db
 up: 
-	docker-compose ./srcs/docker-compose.yml up --build 
+	docker-compose -f ./srcs/docker-compose.yml up --build 
 down:
-	docker-compose ./srcs/docker-compose.yml down
+	docker-compose -f ./srcs/docker-compose.yml down
 clean:
-	rm -rf $HOME/data/wp $HOME/data/db
+	rm -rf ${HOME}/data/wp ${HOME}/data/db
 fclean:
 	docker rm -f $(docker ps -a -q)
 	docker image rmi -f $(docker images -q)
