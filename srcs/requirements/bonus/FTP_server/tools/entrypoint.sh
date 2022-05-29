@@ -1,12 +1,14 @@
 #!/bin/sh
 
-useradd sammy
-echo "sammy:pwd" | chpasswd
-mkdir -p /home/sammy/ftp
-chown nobody:nogroup /home/sammy/ftp
-mkdir /home/sammy/ftp/files
-chown sammy:sammy /home/sammy/ftp/files
-echo "sammy" >> /etc/vsftpd.userlist
+useradd $FTP_USER
+echo "$FTP_USER:$FTP_PASS" | chpasswd
+mkdir -p /home/$FTP_USER/ftp
+chown nobody:nogroup /home/$FTP_USER/ftp
+chmod a-w /home/$FTP_USER/ftp
+mkdir /home/$FTP_USER/ftp/files
+chown $FTP_USER:$FTP_USER /home/$FTP_USER/ftp/files
+echo "$FTP_USER" >> /etc/vsftpd.userlist
+# echo -e "secure_chroot_dir=/home/$FTP_USER/ftp/files" >> /tmp/vsftpd.conf
+echo "secure_chroot_dir=/home/$FTP_USER/ftp/files" | tee -a /tmp/vsftpd.conf
 cp /tmp/vsftpd.conf /etc/vsftpd.conf
-echo "************************************"
 /usr/sbin/vsftpd
