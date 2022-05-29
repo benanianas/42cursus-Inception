@@ -59,7 +59,7 @@ services:
         ipv4_address: "10.12.69.4"
     container_name: redis
   adminer:
-    build: ./requirements/adminer
+    build: ./requirements/bonus/adminer
     volumes:
       - wp:/var/www
     restart: on-failure
@@ -84,6 +84,15 @@ services:
       inception:
         ipv4_address: "10.12.69.6"
     container_name: ftp_server
+  static_website:
+    build: ./requirements/bonus/static_website
+    restart: on-failure
+    ports:
+      - "5000:5000"
+    networks:
+      inception:
+        ipv4_address: "10.12.69.7"
+    container_name: static_website
 networks:
   inception:
    ipam:
