@@ -119,10 +119,10 @@ volumes:
     driver_opts:
       type: 'none' 
       o: bind
-      device: $HOME/abenani/data/wp
+      device: $HOME/data/wp
   db:
     driver: local
     driver_opts:
       type: 'none' 
       o: bind
-      device: $HOME/abenani/data/db
+      device: $HOME/data/db
