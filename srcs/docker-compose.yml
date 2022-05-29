@@ -69,8 +69,8 @@ services:
       inception:
         ipv4_address: "10.12.69.5"
     container_name: adminer
-  ftp_server:
-    build: ./requirements/bonus/ftp_server
+  ftp:
+    build: ./requirements/bonus/ftp
     volumes:
       - wp:/home/${FTP_USER}/ftp/files
     restart: on-failure
@@ -83,16 +83,31 @@ services:
     networks:
       inception:
         ipv4_address: "10.12.69.6"
-    container_name: ftp_server
-  static_website:
-    build: ./requirements/bonus/static_website
+    container_name: ftp
+  website:
+    build: ./requirements/bonus/website
     restart: on-failure
     ports:
       - "5000:5000"
     networks:
       inception:
         ipv4_address: "10.12.69.7"
-    container_name: static_website
+    container_name: website
+  cadvisor:
+    build: ./requirements/bonus/cadvisor
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
+    networks:
+      inception:
+        ipv4_address: "10.12.69.8"
+    container_name: cadvisor
 networks:
   inception:
    ipam:
