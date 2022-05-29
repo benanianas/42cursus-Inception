@@ -8,7 +8,6 @@ chmod a-w /home/$FTP_USER/ftp
 mkdir /home/$FTP_USER/ftp/files
 chown $FTP_USER:$FTP_USER /home/$FTP_USER/ftp/files
 echo "$FTP_USER" >> /etc/vsftpd.userlist
-# echo -e "secure_chroot_dir=/home/$FTP_USER/ftp/files" >> /tmp/vsftpd.conf
 echo "secure_chroot_dir=/home/$FTP_USER/ftp/files" | tee -a /tmp/vsftpd.conf
 cp /tmp/vsftpd.conf /etc/vsftpd.conf
 /usr/sbin/vsftpd
