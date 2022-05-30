@@ -1,15 +1,19 @@
 init:
-	mkdir -p ${HOME}/data/wp ${HOME}/data/db
+	mkdir -p /home/abenani/data/wp /home/abenani/data/db
 up: 
-	docker-compose -f ./srcs/docker-compose.yml up --build 
+	docker-compose -f ./srcs/docker-compose.yml up --build
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
 clean:
-	rm -rf ${HOME}/data/wp/* ${HOME}/data/db/*
+	- rm -rf /home/abenani/data
 fclean:
-	docker rm -f $(docker ps -a -q)
-	docker image rmi -f $(docker images -q)
-	docker network rm $(docker network ls -q)
-	docker volume rm -f $(docker volume ls -q)
+	- docker rm -f srcs_wordpress srcs_nginx srcs_mariadb \
+					srcs_redis srcs_adminer srcs_ftp \
+					srcs_cadvisor srcs_website
+	- docker rmi -f srcs_wordpress srcs_nginx srcs_mariadb \
+					srcs_redis srcs_adminer srcs_ftp \
+					srcs_cadvisor srcs_website
+	- docker volume rm srcs_db srcs_wp
+	- docker network rm srcs_inception
 re:
-	clean fclean init up
+	fclean init up
