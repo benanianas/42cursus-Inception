@@ -5,7 +5,7 @@ up:
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
 clean:
-	rm -rf ${HOME}/data/wp ${HOME}/data/db
+	rm -rf ${HOME}/data/wp/* ${HOME}/data/db/*
 fclean:
 	docker rm -f $(docker ps -a -q)
 	docker image rmi -f $(docker images -q)
