@@ -9,7 +9,7 @@ services:
       - db:/var/lib/mysql
     networks:
       inception:
-        ipv4_address: "10.12.69.1"
+        ipv4_address: "192.0.69.1"
     restart: always
     container_name: mariadb
   wordpress:
@@ -22,7 +22,7 @@ services:
     env_file: .env
     networks:
       inception:
-        ipv4_address: "10.12.69.2"
+        ipv4_address: "192.0.69.2"
     container_name: wordpress
     depends_on:
       - mariadb
@@ -34,7 +34,7 @@ services:
       - "443:443"
     networks:
       inception:
-        ipv4_address: "10.12.69.3"
+        ipv4_address: "192.0.69.3"
     depends_on:
       - wordpress
     restart: always
@@ -46,7 +46,7 @@ services:
       - "6379"
     networks:
       inception:
-        ipv4_address: "10.12.69.4"
+        ipv4_address: "192.0.69.4"
     container_name: redis
   adminer:
     build: ./requirements/bonus/adminer
@@ -57,7 +57,7 @@ services:
       - "7000"
     networks:
       inception:
-        ipv4_address: "10.12.69.5"
+        ipv4_address: "192.0.69.5"
     container_name: adminer
   ftp:
     build: ./requirements/bonus/ftp
@@ -70,7 +70,7 @@ services:
     env_file: .env
     networks:
       inception:
-        ipv4_address: "10.12.69.6"
+        ipv4_address: "192.0.69.6"
     container_name: ftp
   website:
     build: ./requirements/bonus/website
@@ -79,7 +79,7 @@ services:
       - "5000:5000"
     networks:
       inception:
-        ipv4_address: "10.12.69.7"
+        ipv4_address: "192.0.69.7"
     container_name: website
   cadvisor:
     build: ./requirements/bonus/cadvisor
@@ -94,13 +94,13 @@ services:
       - "/dev/disk/:/dev/disk:ro"
     networks:
       inception:
-        ipv4_address: "10.12.69.8"
+        ipv4_address: "192.0.69.8"
     container_name: cadvisor
 networks:
   inception:
    ipam:
      config:
-       - subnet: "10.12.69.0/8"
+       - subnet: "192.0.69.0/8"
 volumes:
   wp:
     driver: local
