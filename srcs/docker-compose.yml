@@ -2,33 +2,24 @@ version: "3.6"
 services:
   mariadb:
     build: ./requirements/mariadb
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      DB_NAME: ${DB_NAME}
+    expose:
+      - "3306"
+    env_file: .env
     volumes:
       - db:/var/lib/mysql
     networks:
       inception:
         ipv4_address: "10.12.69.1"
-    restart: on-failure
+    restart: always
     container_name: mariadb
   wordpress:
     build: ./requirements/wordpress
     volumes:
       - wp:/var/www
-    restart: on-failure
-    ports:
-      - "9000:9000"
-    environment:
-      DB_USER: ${MYSQL_USER}
-      DB_PASSWORD: ${MYSQL_PASSWORD}
-      DB_NAME: ${DB_NAME}
-      ADMIN_PASS: ${ADMIN_PASS}
-      USER_PASS: ${USER_PASS}
+    restart: always
+    expose:
+      - "9000"
+    env_file: .env
     networks:
       inception:
         ipv4_address: "10.12.69.2"
@@ -40,20 +31,19 @@ services:
     volumes:
       - wp:/var/www
     ports:
-      - "80:80"
       - "443:443"
     networks:
       inception:
         ipv4_address: "10.12.69.3"
     depends_on:
       - wordpress
-    restart: on-failure
+    restart: always
     container_name: nginx
   redis:
     build: ./requirements/bonus/redis
-    restart: on-failure
-    ports:
-      - "6379:6379"
+    restart: always
+    expose:
+      - "6379"
     networks:
       inception:
         ipv4_address: "10.12.69.4"
@@ -62,9 +52,9 @@ services:
     build: ./requirements/bonus/adminer
     volumes:
       - wp:/var/www
-    restart: on-failure
-    ports:
-      - "7000:7000"
+    restart: always
+    expose:
+      - "7000"
     networks:
       inception:
         ipv4_address: "10.12.69.5"
@@ -72,21 +62,19 @@ services:
   ftp:
     build: ./requirements/bonus/ftp
     volumes:
-      - wp:/home/${FTP_USER}/ftp/files
-    restart: on-failure
+      - wp:/home/abenani/ftp/files
+    restart: always
     ports:
       - "21:21"
       - "40000-40010:40000-40010"
-    environment:
-      FTP_USER: ${FTP_USER}
-      FTP_PASS: ${FTP_PASS}
+    env_file: .env
     networks:
       inception:
         ipv4_address: "10.12.69.6"
     container_name: ftp
   website:
     build: ./requirements/bonus/website
-    restart: on-failure
+    restart: always
     ports:
       - "5000:5000"
     networks:
@@ -95,7 +83,7 @@ services:
     container_name: website
   cadvisor:
     build: ./requirements/bonus/cadvisor
-    restart: on-failure
+    restart: always
     ports:
       - "3000:3000"
     volumes:
