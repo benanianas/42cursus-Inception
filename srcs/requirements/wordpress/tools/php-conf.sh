@@ -11,8 +11,6 @@ sed -i 's/;date.timezone =/date.timezone = \"Africa\/Casablanca\"/g' /etc/php/7.
 sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 
 # wordpress settings
-# wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz
-# tar -xvzf /tmp/wordpress.tar.gz -C /var/www/wordpress
 wp core download --path=/var/www/wordpress --version=6.0 --allow-root
 wp core config --path=/var/www/wordpress --dbname=$DB_NAME --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb --skip-check --allow-root --extra-php <<PHP
 define( 'WP_REDIS_HOST', 'redis' );
